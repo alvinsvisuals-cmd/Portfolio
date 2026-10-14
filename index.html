@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alvin Visuals | Videographer & Photographer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0f;
+      --card-bg: #16161a;
+      --accent: #d4af37;
+      --text: #f0f0f2;
+      --muted: #8b8b99;
+      --border: #24242c;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(13, 13, 15, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Playfair Display', serif;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      transition: var(--transition);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 5% 4rem;
+      max-width: 1100px;
+    }
+
+    .hero-tag {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      font-weight: 300;
+    }
+
+    /* Gallery Filter */
+    .gallery-section {
+      padding: 2rem 5% 6rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .tab-bar {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  padding: 0.5rem 0 0.75rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tab-btn:hover { color: var(--text); }
+
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--bg);
+      background: var(--text);
+      border-color: var(--text);
+    }
+
+    /* Portfolio Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .grid-item {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--card-bg);
+    }
+
+    .grid-item img {
+      transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    .grid-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .grid-item:hover .item-overlay {
+      opacity: 1;
+    }
+
+    .item-category {
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-title {
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 6rem 5%;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-image {
+      aspect-ratio: 4/5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      padding: 6rem 5%;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-cta {
+      display: inline-block;
+      background: var(--text);
+      color: var(--bg);
+      padding: 1rem 2.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .contact-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.social-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+    .contact-cta:hover {
+      background: var(--accent);
+      color: #000;
+      transform: translateY(-2px);
+    }
+
+   /* Lightbox Modal */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 12, 0.95);
+  z-index: 200;
+  display: none;
+  overflow: auto;                 /* makes the lightbox scrollable */
+  padding: 2rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.lightbox.active {
+  display: block;
+}
+
+.lightbox-content {
+  width: fit-content;
+  margin: 0 auto;
+  min-height: calc(100vh - 4rem);
+  display: flex;
+  align-items: center;
+}
+
+.lightbox-content img {
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 4rem);
+  max-height: calc(100vh - 4rem);
+  object-fit: contain;
+  border-radius: 4px;
+  cursor: default;
+}
+
+.lightbox-close {
+  position: fixed;                /* stays put while the lightbox scrolls */
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  cursor: pointer;
+}
+
+/* Video player */
+.player {
+  position: relative;
+  display: flex;
+}
+
+.player video {
+  max-width: calc(100vw - 4rem);
+  max-height: calc(100vh - 4rem);
+  background: #000;
+  border-radius: 4px;
+}
+
+.big-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.big-play:hover { background: var(--accent); color: #000; }
+.big-play.hidden { opacity: 0; pointer-events: none; }
+
+.grid-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+    footer {
+      padding: 3rem 5%;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Alvin Visuals</div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="hero-tag">Visual Storyteller — Sports, and Portraits</span>
+      <h1>Capturing human emotion.</h1>
+      <p>Independent Videographer based in New York, specializing in sports Videography, Photography and Portraits.</p>
+    </section>
+
+    <section class="gallery-section" id="work">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="Photo">Photos</button>
+        <button class="tab-btn" data-tab="Video">Videos</button>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="sports">Sports</button>
+        <button class="filter-btn" data-filter="portraits">Portraits</button>
+        <button class="filter-btn" data-filter="weddings">Weddings</button>
+      </div>
+      
+
+      <div class="grid">
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/FB 54 - John Golden-2.jpg" alt="John Golden">
+          <div class="item-overlay">
+            <span class="item-category">Sports Photo</span>
+            <h3 class="item-title">John Golden</h3>
+          </div>
+        </article>
+
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/FB team-3-101.jpg" alt="Football Team">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">SBU Football Team</h3>
+          </div>
+        </article>
+
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/Runout-12.jpg" alt="Runout">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Football Runout</h3>
+          </div>
+        </article>
+
+       <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/WLax-38.jpg" alt="Caporuscio">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title"> Isabella Caporuscio</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/FB 8 - James Dely-27.jpg" alt="Dely">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title"> James Dely</h3>
+          </div>
+        </article>
+         <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/FB 10 - Quinn Boyd-9-79.jpg" alt="Quinn Boyd">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title"> Quinn Boyd</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/Cooper Brannon.jpg" alt="Jack Brannon">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title"> Cooper Brannon</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/Jack Cooper.jpg" alt="Jack Cooper">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title"> Jack Cooper</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="Sports">
+          <img src="Photos/Jack Restino.jpg" alt="Jack Restino">
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title"> Jack Restino</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="portraits">
+          <img src="Photos/SwayPhotos-19.jpg" alt="Sway">
+          <div class="item-overlay">
+            <span class="item-category">Portraits</span>
+            <h3 class="item-title"> Sway Clothing</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="portraits">
+          <img src="Photos/SwayPhotos-27.jpg" alt="Sway">
+          <div class="item-overlay">
+            <span class="item-category">Portraits</span>
+            <h3 class="item-title"> Sway Clothing</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="portraits">
+          <img src="Photos/SwayPhotos-28.jpg" alt="Sway">
+          <div class="item-overlay">
+            <span class="item-category">Portraits</span>
+            <h3 class="item-title"> Sway Clothing</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="portraits">
+          <img src="Photos/SwayPhotos-43.jpg" alt="Sway">
+          <div class="item-overlay">
+            <span class="item-category">Portraits</span>
+            <h3 class="item-title"> Sway Clothing</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Photo" data-category="portraits">
+          <img src="Photos/SwayPhotos-60.jpg" alt="Sway">
+          <div class="item-overlay">
+            <span class="item-category">Portraits</span>
+            <h3 class="item-title"> Sway Clothing</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Dely TD.mp4#t=12.3" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Dely Touchdown</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Palomba Goal Reel.mp4#t=18" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Palomba Goal</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Bonilla Goal Reel.mp4#t=8" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Bonilla Goal</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Cross Country Meet.mp4#t=19.8" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Cross Country Meet</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/UPenn George Goal.mp4#t=.8" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Allison George Goal</h3>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="about-container">
+        <div class="about-image">
+          <img src="Photos/IMG_4984.JPG" alt="Alvin Visuals">
+        </div>
+        <div class="about-text">
+          <h2>Behind the Lens</h2>
+          <p>I'm Alvin Ouyang — a visual storyteller based in New York, specializing in Sports and Portraits. I believe the best moments aren't the ones you plan, but the ones that happen when people forget the camera is there. That's why I focus on capturing real reactions, raw emotions, and the energy that makes every story unique.
+          </p>
+          <p> I'm currently working for Stony Brook Athletics, creating highlight reels, hype videos, and game recaps featured on official channels. From the roar of a championship crowd to noticing the small details in sports, I bring the same dedication to every project.
+My approach is simple: show up prepared, capture the moment, and deliver work that makes people feel something.
+Whether it's a game-winning goal, a senior portrait, or a brand promo — I'm there to tell your story.
+Let's create something real.
+</p>
+           </div>  
+      </div>   
+    </section>
+
+    <section class="contact-section" id="contact">
+      <h2>Let's create together.</h2>
+      <p>Available for sports videography and photography along with portraits</p>
+
+      <div class="contact-links">
+        <a href="mailto:Alvins.Visuals@gmail.com" class="contact-cta">Alvins.Visuals@gmail.com</a>
+
+        <a href="https://www.instagram.com/alvins.visuals/" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+          </svg>
+          Instagram
+        </a>
+
+        <a href="https://www.linkedin.com/in/alvin-ouyang-4193173b4/" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <path d="M8 10v6M8 7.5v.01M12 16v-6M12 12.5c0-1.5 1-2.5 2.5-2.5S17 11 17 12.5V16"/>
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">&times;</button>
+  <div class="lightbox-content" id="lightbox-content"></div>
+</div>
+
+  <footer>
+    <p>&copy; 2026 Alvin's Visuals. All rights reserved.</p>
+  </footer>
+
+  <script>
+   // Gallery Tabs + Filter Logic
+const tabButtons = document.querySelectorAll('.tab-btn');
+const filterButtons = document.querySelectorAll('.filter-btn');
+const gridItems = document.querySelectorAll('.grid-item');
+
+let activeTab = 'Photo';
+let activeFilter = 'all';
+
+function applyFilters() {
+  gridItems.forEach(item => {
+    const typeMatch = (item.dataset.type || '').toLowerCase() === activeTab.toLowerCase();
+    const catMatch = activeFilter === 'all' ||
+      (item.dataset.category || '').toLowerCase() === activeFilter.toLowerCase();
+    item.style.display = (typeMatch && catMatch) ? 'block' : 'none';
+  });
+}
+
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTab = btn.dataset.tab;
+    applyFilters();
+  });
+});
+
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyFilters();
+  });
+});
+
+applyFilters(); // show only the Photos tab on page load
+    // Lightbox Logic
+const lightbox = document.getElementById('lightbox');
+const lightboxContent = document.getElementById('lightbox-content');
+const lightboxClose = document.getElementById('lightbox-close');
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  lightboxContent.innerHTML = '';          // also stops video and audio
+  document.body.style.overflow = '';       // restore page scrolling
+}
+
+gridItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const vid = item.querySelector('video');
+
+    if (vid) {
+      const src = vid.getAttribute('src').split('#')[0];
+      lightboxContent.innerHTML = `
+        <div class="player">
+          <video src="${src}" controls autoplay playsinline></video>
+          <button class="big-play hidden" aria-label="Play video">&#9654;</button>
+        </div>`;
+      const player = lightboxContent.querySelector('video');
+      const bigPlay = lightboxContent.querySelector('.big-play');
+
+      bigPlay.addEventListener('click', () => player.play());
+      player.addEventListener('play', () => bigPlay.classList.add('hidden'));
+      player.addEventListener('pause', () => bigPlay.classList.remove('hidden'));
+      player.play().catch(() => bigPlay.classList.remove('hidden'));
+    } else {
+      const img = document.createElement('img');
+      img.src = item.querySelector('img').src;
+      img.alt = item.querySelector('img').alt;
+      lightboxContent.innerHTML = '';
+      lightboxContent.appendChild(img);
+    }
+
+    lightbox.scrollTo(0, 0);
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
