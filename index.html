@@ -98,13 +98,53 @@
 
     /* Hero Section */
     .hero {
-      min-height: 80vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 5% 4rem;
-      max-width: 1100px;
-    }
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;                 /* sits above the video and the fade */
+  max-width: 1100px;
+  padding: 8rem 5% 4rem;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    /* fades the bottom edge into the gallery section */
+    linear-gradient(to top, var(--bg) 0%, rgba(13, 13, 15, 0) 25%),
+    /* solid on the left, clear on the right */
+    linear-gradient(to right,
+      var(--bg) 0%,
+      var(--bg) 20%,
+      rgba(13, 13, 15, 0.65) 50%,
+      rgba(13, 13, 15, 0) 100%);
+}
+
+@media (max-width: 768px) {
+  /* On phones there's no "right side", so darken the whole video instead */
+  .hero-fade {
+    background:
+      linear-gradient(to top, var(--bg) 0%, rgba(13, 13, 15, 0) 30%),
+      rgba(13, 13, 15, 0.65);
+  }
+}
 
     .hero-tag {
       color: var(--accent);
@@ -473,10 +513,17 @@
 
   <main>
     <section class="hero">
-      <span class="hero-tag">Visual Storyteller — Sports, and Portraits</span>
-      <h1>Capturing human emotion.</h1>
-      <p>Independent Videographer based in New York, specializing in sports Videography, Photography and Portraits.</p>
-    </section>
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="Photos/hero-poster.jpg">
+    <source src="Videos/Website Clip.mp4" type="video/mp4">
+  </video>
+  <div class="hero-fade"></div>
+
+  <div class="hero-content">
+    <span class="hero-tag">Visual Storyteller — Sports, and Portraits</span>
+    <h1>Capturing human emotion.</h1>
+    <p>Independent Videographer based in New York, specializing in sports Videography, Photography and Portraits.</p>
+  </div>
+</section>
 
     <section class="gallery-section" id="work">
       <div class="tab-bar">
@@ -488,7 +535,6 @@
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="sports">Sports</button>
         <button class="filter-btn" data-filter="portraits">Portraits</button>
-        <button class="filter-btn" data-filter="weddings">Weddings</button>
       </div>
       
 
@@ -595,6 +641,13 @@
           </div>
         </article>
         <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Willamson Goal Reel.mp4#t=4.2" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Willamson Goal</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
           <video src="Videos/Dely TD.mp4#t=12.3" muted playsinline preload="metadata"></video>
           <div class="item-overlay">
             <span class="item-category">Sports</span>
@@ -609,6 +662,13 @@
           </div>
         </article>
         <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Hestor Hurdle.mp4#t=5" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Hestor Hurdle</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
           <video src="Videos/Bonilla Goal Reel.mp4#t=8" muted playsinline preload="metadata"></video>
           <div class="item-overlay">
             <span class="item-category">Sports</span>
@@ -620,6 +680,13 @@
           <div class="item-overlay">
             <span class="item-category">Sports</span>
             <h3 class="item-title">Cross Country Meet</h3>
+          </div>
+        </article>
+        <article class="grid-item" data-type="Video" data-category="Sports">
+          <video src="Videos/Marist Recap.mp4#t=29.5" muted playsinline preload="metadata"></video>
+          <div class="item-overlay">
+            <span class="item-category">Sports</span>
+            <h3 class="item-title">Marist Game Recap</h3>
           </div>
         </article>
         <article class="grid-item" data-type="Video" data-category="Sports">
@@ -652,11 +719,9 @@ Let's create something real.
 
     <section class="contact-section" id="contact">
       <h2>Let's create together.</h2>
-      <p>Available for sports videography and photography along with portraits</p>
+            <p>Available for sports videography and photography along with portraits</p>
 
       <div class="contact-links">
-        <a href="mailto:Alvins.Visuals@gmail.com" class="contact-cta">Alvins.Visuals@gmail.com</a>
-
         <a href="https://www.instagram.com/alvins.visuals/" target="_blank" rel="noopener" class="social-link">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="5"/>
@@ -664,6 +729,14 @@ Let's create something real.
             <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
           </svg>
           Instagram
+        </a>
+
+        <a href="mailto:Alvins.Visuals@gmail.com" class="social-link">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M3 7l9 6 9-6"/>
+          </svg>
+          Alvins.Visuals@gmail.com
         </a>
 
         <a href="https://www.linkedin.com/in/alvin-ouyang-4193173b4/" target="_blank" rel="noopener" class="social-link">
